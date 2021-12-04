@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮换图</title>
+    <link href="../css/lunhuan.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div class="box">
+        <ul class="tu">
+        <li class="box-img1"><img src="../img/下载 (1).png" width="300" height="200"></li>
+        <li class="box-img2"><img src="../img/wallhaven-kw22p1.jpg"width="300" height="200"></li>
+        <li class="box-img3"><img src="../img/wallhaven-v9dr6p.jpg"width="300" height="200"></li>
+        <li class="box-img4"><img src="../img/下载.png"width="300" height="200"></li>
+        </ul>
+        <div class="box-l"><a href="#">&lt;</a></div>
+        <div class="box-r"><a href="#">&gt;</a></div>
+            <ol class="y">
+               
+            </ol>
+
+    </div>
+    <script>
+        const box = document.querySelector('.box');
+        const box_l = document.querySelector('.box-l');
+        const ul = box.querySelector('ul');
+        const imm = ul.querySelectorAll('li');
+        const box_r = document.querySelector('.box-r');
+        const img = ['box-img1','box-img2','box-img3','box-img4'];
+        // 创建一个左右图标消失 
+        box_l.style.display = 'none';
+        box_r.style.display = 'none';
+        let time = setInterval(right,1500);   
+        box.addEventListener ('mouseover',function(){
+        box_l.style.display = 'block';
+        box_r.style.display = 'block';
+        clearInterval(time);
+})   
+        box.addEventListener('mouseout',function(){
+        box_l.style.display = 'none';
+        box_r.style.display = 'none';
+        clearInterval(time);
+        time = setInterval(right, 1500);
+})      
+        li = addEventListener('click',tiao);
+        function tiao(){
+            let index = this.getAttribute('index');
+            let now = img.indexOf('img1');
+            let juli = Math.MAX(index,now)-Math.min(index,now);
+            if(index>now){
+                while(juli--){
+                    right();
+                }
+            }
+            else{
+                while(juli--){
+                    left();
+                }
+            }
+        }
+        const ol = box.querySelector('.y');
+        console.log(ul.children.length);
+        for(let i = 0;i < ul.children.length; i++) {
+            const li = document.createElement('li');
+            ol.appendChild(li);
+            li.setAttribute('index', i);
+            li.addEventListener('click',function() {
+                for(let i=0;i < ol.children.length;i++){
+                    ol.children[i].className= '';
+                }
+                this.className = 'current';
+            })
+        }
+        ol.children[0].className = 'current';
+        // setInterval
+     //点击事件进行切换图片
+     box_r.addEventListener("click",right);
+        function right(){
+            img.unshift(img[3]);
+            img.pop();
+            for(let i=0;i< img.length;i++){
+                imm[i].setAttribute('class',img[i]);
+            }
+        }
+    box_l.addEventListener("click",left);
+        function left(){
+            img.push(img[0]);
+            img.shift();
+            for(let i=3;i< img.length;i--){
+                imm[i].setAttribute('class',img[i]);
+            }
+        }     
+    </script>
+</body>
+</html>
